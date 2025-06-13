@@ -1,0 +1,135 @@
+Implement a Program in C for converting an Infix Expression to Postfix Expression.
+
+#include<stdio.h>
+
+#include<string.h>
+
+int inputpre(char sym) //Function for input precedence
+
+{
+
+switch(sym)
+
+{
+
+case '+' :
+
+case '-' : return 1;
+
+case '*' :
+
+case '/' : return 3;
+
+case '^' :
+
+case '$' : return 6;
+
+case '(' : return 9;
+
+case ')' : return 0;
+
+default : return 7;
+
+}
+
+}
+
+int stackpre(char sym) //Function for stack precedence
+
+{
+
+switch(sym)
+
+{
+
+case '+' :
+
+case '-' : return 2;
+
+case '*' :
+
+case '/' : return 4;
+case '^' :
+
+case '$' : return 5;
+
+case '(' : return 0;
+
+case '#' : return -1;
+
+default : return 8;
+
+}
+
+}
+
+void push (char item, int *top, char s[])
+
+{
+
+s[++(*top)] = item;
+
+}
+
+char pop(int *top, char s[])
+
+{
+
+return s[(*top)--];
+
+}
+
+void infix_to_postfix (char ifix[], char pfix[])
+
+{
+
+int top = -1, i, j = 0;
+
+char s[30] , sym;
+
+push('#',&top,s);
+
+for(i=0;i < strlen(ifix);i++)
+
+{
+
+sym = ifix[i];
+
+while (stackpre(s[top]) >inputpre(sym))
+
+pfix[j++] = pop(&top,s);
+
+if(stackpre(s[top]) != inputpre(sym))
+push(sym,&top,s);
+
+else
+
+pop(&top,s);
+
+}
+while(s[top] != '#')
+
+pfix[j++] = pop(&top,s);
+
+pfix[j] = '\0';
+
+}
+
+int main()
+
+{
+
+char ifix[20], pfix[20];
+
+printf("Enter valid infix expression\n");
+
+scanf("%s", ifix);
+
+infix_to_postfix (ifix,pfix);
+
+printf("The postfix expression is = %s", pfix);
+
+return 0;
+
+}
+
