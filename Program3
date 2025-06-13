@@ -1,0 +1,247 @@
+3. Design, develop, and execute a program in C to simulate the working of a queue of 
+
+integers using an array. Provide the following operations: a. Insert b. Delete c. 
+
+Display
+
+#include <stdio.h>
+
+#include <stdlib.h>
+
+#define MAX_SIZE 5
+
+int queue [MAX_SIZE];
+
+int front=-1;
+
+int rear= -1;
+
+void isEmpty()
+
+{
+
+ if(rear==-1 && front==-1)
+
+ {
+
+ printf("Queue is empty \n");
+
+ }
+
+ else
+
+ {
+
+ printf("queue is not empty \n");
+
+ }
+
+}
+
+void isFull()
+
+{
+
+ if(rear==MAX_SIZE-1)
+
+ {
+
+ printf("Queue is full \n");
+
+ }
+
+ else{
+
+ printf("Queue is not full \n");
+
+ }
+
+}
+
+void peek()
+{
+
+ if(front==-1 && rear==-1)
+
+ {
+
+ printf("There is no element inside the queue to display");
+
+ }
+
+ else
+
+ {
+
+ printf("The element at the front node is: %d",queue[front]);
+
+ }
+
+}
+
+void Enqueue()
+
+{
+
+ int item;
+
+ if(rear==MAX_SIZE-1)
+
+ {
+
+ printf("Overflow Error");
+
+ }
+
+ else
+
+ {
+
+ if(front==-1)
+
+ {
+
+ front=0;
+
+ }
+
+ printf("Enter the element for Insertion");
+
+ scanf("%d",&item);
+
+ rear++;
+
+ queue[rear]=item;
+
+ }
+
+}
+
+void Dequeue()
+{
+
+ if(front==-1 && rear==-1)
+
+ {
+
+ printf(" queue underflow ");
+
+ }
+
+ else if(front==rear)
+
+ {
+
+ front=rear=-1;
+
+ }
+
+ else
+
+ {
+
+ printf("The deleted element from the queue is",queue[front]);
+
+ front++;
+
+ }
+
+}
+
+void display()
+
+{
+
+ if(front==-1)
+
+ {
+
+ printf("queue is empty");
+
+ }
+
+ else
+
+ {
+
+ printf("Queue elements are:\n");
+
+ for(int i=front;i<=rear;i++)
+
+ printf("%d\n",queue[i]);
+
+ }
+
+}
+
+int main()
+
+{
+int ch;
+
+ while (1)
+
+ {
+
+ printf("\n 1.sEmpty Operation\n 2.isFull Operation\n 3. peek Operations\n 4.Enqueue 
+
+Operation\n 5.Dequeue Operation\n 6.Display the Queue\n 7.Exit\n");
+
+ printf("Enter your choice of operations : ");
+
+ scanf("%d", &ch);
+
+ switch (ch)
+
+ {
+
+ case 1:
+
+ isEmpty();
+
+ break;
+
+ case 2:
+
+ isFull();
+
+ break;
+
+ case 3:
+
+ peek();
+
+ break;
+
+ case 4:
+
+ Enqueue();
+
+ break;
+
+ case 5:
+
+ Dequeue();
+
+ break;
+
+ case 6:
+
+ display();
+
+ break;
+
+ case 7:
+
+ exit(0);
+
+ default:
+
+ printf("Incorrect choice \n");
+}
+
+ }
+
+ return 0;
+
+}
