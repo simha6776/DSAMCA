@@ -1,0 +1,105 @@
+5. Write a C program to Implement the following searching techniques a. Linear Search 
+
+b. Binary Search.
+
+#include <stdio.h>
+
+// Linear Search Function
+
+int linearSearch(int arr[], int n, int key) {
+
+ for (int i = 0; i < n; i++) {
+
+ if (arr[i] == key) {
+
+ return i; // Return index if key is found
+
+ }
+
+ }
+
+ return -1; // Return -1 if key not found
+}
+/ Binary Search Function (for sorted arrays)
+
+int binarySearch(int arr[], int size, int key) {
+
+ int low = 0;
+
+ int high = size - 1;
+
+ while (low <= high) {
+
+ int mid = (low + high) / 2;
+
+ if (arr[mid] == key)
+
+ return mid; // Element found
+
+ else if (arr[mid] < key)
+
+ low = mid + 1; // Search in right half
+
+ else
+
+ high = mid - 1; // Search in left half
+
+ }
+
+ return -1; // Element not found
+
+}
+
+int main() {
+
+ int size, key;
+
+ // Input size
+
+ printf("Enter size of array: ");
+
+ scanf("%d", &size);
+
+ int arr[size];
+
+ // Input sorted array elements
+
+ printf("Enter array elements in sorted order:\n");
+
+ for (int i = 0; i < size; i++) {
+
+ scanf("%d", &arr[i]);
+
+ }
+
+ // Input the element to search
+
+ printf("Enter the element to search: ");
+scanf("%d", &key);
+ Linear Search
+
+ int indexLinear = linearSearch(arr, size, key);
+
+ if (indexLinear != -1)
+
+ printf("Linear Search: Element found at index %d\n", indexLinear);
+
+ else
+
+ printf("Linear Search: Element not found in the array\n");
+
+ // Binary Search
+
+ int indexBinary = binarySearch(arr, size, key);
+
+ if (indexBinary != -1)
+
+ printf("Binary Search: Element found at index %d\n", indexBinary);
+
+ else
+
+ printf("Binary Search: Element not found in the array\n");
+
+ return 0;
+
+}
