@@ -1,0 +1,130 @@
+#include <stdio.h>
+
+#define MAX 100
+
+// Structure to represent an edge
+
+struct Edge {
+
+ int u, v, weight;
+
+};
+
+// Function to sort edges based on weight using Bubble Sort
+
+void sortEdges(struct Edge edges[], int E) {
+
+ for (int i = 0; i < E - 1; i++) {
+
+ for (int j = 0; j < E - i - 1; j++) {
+
+ if (edges[j].weight > edges[j + 1].weight) {
+
+ struct Edge temp = edges[j];
+
+ edges[j] = edges[j + 1];
+
+ edges[j + 1] = temp;
+
+ }
+
+ }
+
+ }
+
+}
+
+// Find function with path compression
+
+int findParent(int parent[], int i) {
+
+ if (parent[i] == i)
+
+ return i;
+
+ return parent[i] = findParent(parent, parent[i]);
+
+}
+
+// Union function
+
+void unionSet(int parent[], int x, int y) {
+
+ int setX = findParent(parent, x);
+
+ int setY = findParent(parent, y);
+
+ parent[setX] = setY;
+
+}
+
+int main() {
+
+ int V, E;
+
+ struct Edge edges[MAX];
+
+ printf("Enter number of vertices: ");
+
+ scanf("%d", &V);
+
+ printf("Enter number of edges: ");
+
+ scanf("%d", &E);
+
+ // Input all edges
+
+ printf("Enter edges (u v weight):\n");
+
+ for (int i = 0; i < E; i++) {
+
+ scanf("%d %d %d", &edges[i].u, &edges[i].v, &edges[i].weight);
+
+ }
+
+ // Sort edges by weight
+sortEdges(edges, E);
+
+ int parent[V];
+
+ for (int i = 0; i < V; i++)
+
+ parent[i] = i;
+
+ int minCost = 0;
+
+ printf("Edges in Minimum Cost Spanning Tree:\n");
+
+ for (int i = 0, count = 0; count < V - 1 && i < E; i++) {
+
+ int u = edges[i].u;
+
+ int v = edges[i].v;
+
+ int w = edges[i].weight;
+
+ int setU = findParent(parent, u);
+
+ int setV = findParent(parent, v);
+
+ // If including this edge doesn't cause a cycle
+
+ if (setU != setV) {
+
+ printf("%d - %d : %d\n", u, v, w);
+
+ minCost += w;
+
+ unionSet(parent, setU, setV);
+
+ count++;
+
+ }
+
+ }
+
+ printf("Minimum Cost of Spanning Tree = %d\n", minCost);
+
+ return 0;
+
+}
