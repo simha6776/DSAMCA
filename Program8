@@ -1,0 +1,135 @@
+#include <stdio.h>
+
+#define MAX 10
+
+#define INF 999 // Infinity
+
+int parent [MAX];
+
+// Function to find the 
+int find(int i) {
+
+ while (parent[i] != i)
+
+ i = parent[i];
+
+ return i;
+
+}
+
+// Function to perform union of two subsets
+
+void unionSet(int i, int j) {
+
+ int a = find(i);
+
+ int b = find(j);
+
+ parent[a] = b;
+
+}
+
+// Function to implement Kruskal's Algorithm
+
+void kruskal(int cost[MAX][MAX], int n) {
+
+ int i, j, u, v, min, a, b;
+
+ int ne = 1; // Number of edges in MST
+
+ int mincost = 0;
+
+ // Initialize parent array
+
+ for (i = 1; i <= n; i++)
+
+ parent[i] = i;
+
+ printf("\nThe edges in the Minimum Cost Spanning Tree are:\n");
+
+ while (ne < n) {
+
+ min = INF;
+
+ // Find the minimum cost edge
+
+ for (i = 1; i <= n; i++) {
+
+ for (j = 1; j <= n; j++) {
+
+ if (cost[i][j] < min) {
+
+ min = cost[i][j];
+
+ a = u = i;
+
+ b = v = j;
+
+ }
+
+ }
+
+ }
+
+ u = find(u);
+
+ v = find(v);
+
+ if (u != v) {
+
+ printf("%d edge (%d,%d) = %d\n", ne++, a, b, min);
+
+ mincost += min;
+
+ unionSet(u, v);
+
+ }
+
+ cost[a][b] = cost[b][a] = INF; // Remove edge from matrix
+
+ }
+
+ printf("Minimum cost = %d\n", mincost);
+
+}
+
+int main() {
+
+ int a[MAX][MAX], n, i, j;
+
+ printf("=======================================\n");
+
+ printf(" Find Minimum Cost Spanning Tree using Kruskal Algorithm \n");
+
+ printf("=======================================\n");
+
+ printf("\nEnter the number of vertices in the graph: ");
+
+ scanf("%d", &n);
+
+ if (n <= 0) {
+
+ printf("Enter a valid number of vertices.\n");
+
+ return 1;
+
+ }
+
+ printf("\nEnter the cost adjacency matrix\n");
+
+ printf("(Enter 0 for self loops and 999 if no direct edge):\n");
+
+ for (i = 1; i <= n; i++) {
+
+ for (j = 1; j <= n; j++) {
+
+ scanf("%d", &a[i][j]);
+
+ }
+}
+
+ kruskal(a, n);
+
+ return 0;
+
+}
