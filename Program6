@@ -102,3 +102,19 @@ int main() {
  // Perform Bubble Sort
 
  bubbleSort(arr1, n);
+printf("Array after Bubble Sort (Ascending Order):\n");
+
+ printArray(arr1, n);
+
+ // Perform Selection Sort
+
+ selectionSort(arr2, n);
+
+ printf("Array after Selection Sort (Descending Order):\n");
+
+ printArray(arr2, n);
+
+ return 0;
+
+}
+
