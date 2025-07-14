@@ -1,0 +1,67 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct node {
+    int data;
+    struct node *left, *right;
+};
+struct node* newNode(int item) {
+    struct node *temporary = (struct node*)malloc(sizeof(struct node));
+    temporary->data = item;
+    temporary->left = temporary->right = NULL;
+    return temporary;
+}
+void postorder(struct node *root) {
+    if (root != NULL) {
+        postorder(root->left);
+        postorder(root->right);
+        printf("%d ", root->data);
+    }
+}
+void preorder(struct node *root) {
+    if (root != NULL) {
+        printf("%d ", root->data);
+        preorder(root->left);
+        preorder(root->right);
+    }
+}
+void inorder(struct node *root) {
+    if (root != NULL) {
+        inorder(root->left);
+        printf("%d ", root->data);
+        inorder(root->right);
+    }
+}
+struct node* insert(struct node *node, int data) {
+    if (node == NULL) return newNode(data);
+    if (data < node->data)
+        node->left = insert(node->left, data);
+    else if (data > node->data)
+        node->right = insert(node->right, data);
+    return node;
+}
+int main() {
+    struct node *root = NULL;
+    int n, value;
+    printf("Enter the number of nodes you want to insert: ");
+    scanf("%d", &n);
+    printf("Enter %d integer values:\n", n);
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &value);
+        if (i == 0) {
+            root = insert(root, value);
+        } else {
+            insert(root, value);
+        }
+    }
+    printf("\nThe postorder traversal is:\n");
+    postorder(root);
+    printf("\nThe preorder traversal is:\n");
+    preorder(root);
+   printf("\nThe inorder traversal is:\n");
+    inorder(root);
+    return 0;
+}
+We start with an empty tree (root = NULL)
+User enters number of nodes: 7
+User enters values: 7, 5, 9, 3, 6, 8, 10
+
